@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>스타일 객체 활용</title>
+    <title>Utilizing the style object</title>
 
     <meta name="description" content="스타일 객체 활용">
-    <meta name="author" content="shallaa">
+    <meta name="author" content="sjshin">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -98,7 +98,7 @@
         <section>
             <div>
                 <h1>
-                    스타일 객체 활용<br>
+                    Utilizing the style object<br>
                 </h1>
             </div>
         </section>
@@ -106,7 +106,7 @@
         <section>
 
             <section data-background="#212124">
-                <h2>스타일 객체???</h2>
+                <h2>style object???</h2>
                 <p style="clear:left"><a href="http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113" class="txt_28" target="_new">http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113</a></p>
                 <div>
                     <iframe scrolling='auto' src='http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113/'
@@ -116,7 +116,7 @@
             </section>
 
             <section data-background="#212124">
-                <h2>스타일 객체??</h2>
+                <h2>style object??</h2>
                 <p style="clear:left"><a href="http://www.w3.org/2003/01/dom2-javadoc/org/w3c/dom/css/CSSStyleDeclaration.html" class="txt_28" target="_new">CSSStyleDeclaration</a></p>
                 <div>
                     <iframe scrolling='auto' src='http://www.w3.org/2003/01/dom2-javadoc/org/w3c/dom/css/CSSStyleDeclaration.html'
@@ -125,27 +125,16 @@
                 </div>
             </section>
 
-            <section data-background="#212124">
-                <h1>
-                    DOM<br>
-                </h1>
-                <div>
-                    <h2>Document</h2>
-                    <h2>Object</h2>
-                    <h2>Model</h2>
-                </div>
-            </section>
-
         </section>
 
         <section>
             <section data-background="#212124">
-                <h2>스타일 객체?</h2>
+                <h2>style object?</h2>
                 <div>
                     <ul style="width:500px;margin-top:20px">
                         <li>CSSStyleDeclaration</li>
                         <li>document.createElement('div').style</li>
-                        <li>최종적으로 모든 스타일의 정보가 저장되는 객체</li>
+                        <li>Finally, for all of the style object that is stored</li>
                         <li>MSStyleCSSProperties, CSS2Properties</li>
                     </ul>
                 </div>
@@ -154,7 +143,7 @@
             <section data-background="#212124">
                 <p style="clear:left">CSSStyleDeclaration</p>
                 <div>
-                    <iframe scrolling='no' src='http://codepen.io/shallaa/embed/jExRzW/?height=430&theme-id=5264&slug-hash=eqtJo&user=none'
+                    <iframe scrolling='no' src='http://codepen.io/sjshin/embed/mygNqv/?height=430&theme-id=5264&slug-hash=eqtJo&user=none'
                             frameborder='no' allowtransparency='true' allowfullscreen='true' style='width:100%;height:475px;overflow:hidden'>
                     </iframe>
                 </div>
@@ -163,16 +152,7 @@
             <section data-background="#212124">
                 <p style="clear:left">CSSStyleDeclaration 활용</p>
                 <div>
-                    <iframe scrolling='no' src='http://codepen.io/shallaa/embed/emrobE/?height=430&theme-id=5264&slug-hash=eqtJo&user=none'
-                            frameborder='no' allowtransparency='true' allowfullscreen='true' style='width:100%;height:475px;overflow:hidden'>
-                    </iframe>
-                </div>
-            </section>
-
-            <section data-background="#212124">
-                <p style="clear:left">&lt;style&gt;&lt;/style&gt;, &lt;link&gt;&lt;/link&gt;</p>
-                <div>
-                    <iframe scrolling='no' src='http://codepen.io/shallaa/embed/azGxeK/?height=430&theme-id=5264&slug-hash=eqtJo&user=none'
+                    <iframe scrolling='no' src='http://codepen.io/sjshin/embed/YPMmEJ/?height=430&theme-id=5264&slug-hash=eqtJo&user=none'
                             frameborder='no' allowtransparency='true' allowfullscreen='true' style='width:100%;height:475px;overflow:hidden'>
                     </iframe>
                 </div>
@@ -181,7 +161,7 @@
 
         <section data-background="#212124">
             <p style="clear:left">
-                스타일 객체( CSSStyleDeclaration )를 찾아서.<br>
+                Find the CSSStyleDeclaration.<br>
             </p>
             <div>
                 <ul style="float:left;width:450px;margin-top:20px">
@@ -196,7 +176,7 @@
 
         <section data-background="#212124">
             <h2>
-                정리하면
+                Browser-specific
             </h2>
             <br>
             <table style="font-size:30px">
@@ -240,7 +220,7 @@
         </section>
 
         <section>
-            <h2>추가, 제거</h2>
+            <h2>Add, Delete</h2>
             <pre><code class="javascript">
                 var styleEl = document.createElement('style');
                 document.getElementsByTagName('head')[0].appendChild(styleEl);
@@ -259,20 +239,20 @@
         </section>
 
         <section>
-            <h2>결론</h2>
+            <h2>Conclusion</h2>
             <br>
             <div>
                 <ul>
-                    <li class="fragment">최종적으로 스타일 속성을 저장하고 제어의 대상이 되는 것은 <span style="color:#2FCC02">CSSStyleDelaration 객체</span></li>
-                    <li class="fragment">모든 DOM Element에는 style 속성이 있음. ( CSSStyleDelaration )</li>
-                    <li class="fragment">스타일 시트 또한 CSSRule 객체에 style 속성이 있음.</li>
-                    <li class="fragment"><span style="color:#2FCC02">따라서 스타일시트 또한 얼마든지 제어가 가능.</span></li>
-                    <li class="fragment">스타일시트의 CSSRuleList를 제어하게 되면..<br>
+                    <li class="fragment">It ultimately save the style attribute and that is the target of control <span style="color:#2FCC02">CSSStyleDelaration object</span></li>
+                    <li class="fragment">The style attribute( CSSStyleDelaration ) is that all DOM Element.</li>
+                    <li class="fragment">Style sheets are also objects that the style attribute to CSSRule.</li>
+                    <li class="fragment"><span style="color:#2FCC02">So how much control any style sheet is also available.</span></li>
+                    <li class="fragment">the control of the stylesheet CSSRuleList<br>
                         <ul style="font-size:20px;list-style:circle">
-                            <li>런타임에 동적으로 스타일 시트를 변경할 수 있게 되고.</li>
-                            <li>풍부한 프로그래밍 언어로서의 자바스크립트로 스타일 시트를 통제할 수 있음.</li>
-                            <li>인라인이 아니라 스타일 시트에 지정한 스타일이 되므로</li>
-                            <li>스타일시트의 성능과 하드웨어의 도움 등을 그대로 활용 가능.</li>
+                            <li>Being able to change the style sheet dynamically at runtime.</li>
+                            <li>That you can control the style sheet with JavaScript.</li>
+                            <li>Style specified by the non-inline style sheet</li>
+                            <li>As it can be utilized to assist in the performance of the hardware, such as style sheets.</li>
                         </ul>
                     </li>
                 </ul>
