@@ -1,7 +1,7 @@
 var CssStyle = (function(W){
-    var doc = W['document'], detect = bs.detectWindow( this, {} ), bStyle = doc.createElement('div').style,
+    var doc = W['document'], bStyle = doc.createElement('div').style,
         cssEl, sheet, rules, css, stylePrefix,
-        index, add, remove;
+        index, add, remove, i;
 
     cssEl = doc.createElement('style');
     doc.getElementsByTagName('head')[0].appendChild(cssEl);
@@ -35,12 +35,13 @@ var CssStyle = (function(W){
         }
     }
 
-    switch( detect.browser ){
-        case'ie': stylePrefix = 'ms'; break;
-        case'firefox': stylePrefix = 'Moz'; break;
-        case'opera': stylePrefix = 'O'; break;
-        default: stylePrefix = 'webkit';
+    for(i in doc.body.style){
+        console.log(i);
+        stylePrefix = i.indexOf('webkit') !== -1 ? 'webkit' :
+                             i.indexOf('ms') !== -1 ? 'ms' :
+                             i.indexOf('Moz') !== -1 ? 'Moz' : '';
     }
+
 
     css = function(sel){
         add(sel);
