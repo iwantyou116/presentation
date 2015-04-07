@@ -1,3 +1,4 @@
+
 var CssStyle = (function(W){
     var doc = W['document'], bStyle = doc.createElement('div').style,
         cssEl, sheet, rules, css, stylePrefix,
@@ -35,15 +36,16 @@ var CssStyle = (function(W){
         }
     }
 
-    for(i in doc.body.style){
-        console.log(i);
-        stylePrefix = i.indexOf('webkit') !== -1 ? 'webkit' :
-                      i.indexOf('ms') !== -1 ? 'ms' :
-                      i.indexOf('Moz') !== -1 ? 'Moz' : '';
+    doc.addEventListener('load',function(){
+        for(i in doc.body.style){
+            console.log(i);
+            stylePrefix = i.indexOf('webkit') !== -1 ? 'webkit' :
+                    i.indexOf('ms') !== -1 ? 'ms' :
+                    i.indexOf('Moz') !== -1 ? 'Moz' : '';
 
-        if(stylePrefix !== '') return;
-    }
-
+            if(stylePrefix !== '') return;
+        }
+    });
 
     css = function(sel){
         add(sel);
