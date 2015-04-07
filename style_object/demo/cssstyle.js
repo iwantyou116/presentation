@@ -38,8 +38,10 @@ var CssStyle = (function(W){
     for(i in doc.body.style){
         console.log(i);
         stylePrefix = i.indexOf('webkit') !== -1 ? 'webkit' :
-                             i.indexOf('ms') !== -1 ? 'ms' :
-                             i.indexOf('Moz') !== -1 ? 'Moz' : '';
+                      i.indexOf('ms') !== -1 ? 'ms' :
+                      i.indexOf('Moz') !== -1 ? 'Moz' : '';
+
+        if(stylePrefix !== '') return;
     }
 
 
