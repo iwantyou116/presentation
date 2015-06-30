@@ -87,6 +87,10 @@
             border: solid 4px #fff;
             color: #fff;
             font-weight: bold; }
+
+        .red{
+            color: #ff4c4d;
+        }
     </style>
 </head>
 
@@ -237,28 +241,24 @@
                     The problem in the code?<br>
                 </p>
                 <pre><!--<code class="javascript" style="max-height: none;">-->
-                    function add(){
-                    <span style="color: #ff4c4d;">
-                        var res = 0;
-                        for(var i = 0; i < arguments.length; i++){
-                            if(isNaN(arguments[i]))
-                                throw new TypeError();</span>
-                            res += arguments[i];
-                    <span style="color: #ff4c4d;">
-                        }
-                        return res;
-                    };</span>
-                    function substract(){
-                    <span style="color: #ff4c4d;">
-                        var res = 0;
-                        for(var i = 0; i < arguments.length; i++){
-                            if(isNaN(arguments[i]))
-                                throw new TypeError();</span>
-                            res -= arguments[i];
-                    <span style="color: #ff4c4d;">
-                        }
-                        return res;
-                    }</span>
+                    <span>function add(){</span>
+                        <span class="red">var res = 0;</span>
+                        <span class="red">for(var i = 0; i < arguments.length; i++){</span>
+                            <span class="red">if(isNaN(arguments[i]))</span>
+                                <span class="red">throw new TypeError();</span>
+                            <span>res += arguments[i];</span>
+                        <span class="red">}</span>
+                        <span class="red">return res;</span>
+                    }
+                    <span>function substract(){</span>
+                        <span class="red">var res = 0;</span>
+                        <span class="red">for(var i = 0; i < arguments.length; i++){</span>
+                            <span class="red">if(isNaN(arguments[i]))</span>
+                                <span class="red">throw new TypeError();</span>
+                            <span>res -= arguments[i];</span>
+                        <span class="red">}</span>
+                        <span class="red">return res;</span>
+                    <span class="red">}</span>
                     ...
                 <!--</code>--></pre>
             </section>
@@ -348,7 +348,7 @@
                     var arg = [];
                     for(var i = 0; i < arguments.length; i++){ //validate();
                         if(isNaN(arguments[i]))
-                        continue;
+                            continue;
                         arg.push(arguments[i]);
                     }
                     for(var j = 0; j < arg.length; j++){ //calculate();
@@ -542,7 +542,7 @@
                     }
                 </code></pre>
                 <p style="clear:left">
-                    Let's make the isNumber. Not, isNaN, synthetic<br/>
+                    Let's make the isNumber. Not, isNaN, compose<br/>
                     not(isNaN(x)) -> not . isNaN
                 </p>
                 <pre><code class="javascript" style="max-height: 300px">
