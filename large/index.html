@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>small tip</title>
+
+    <meta name="author" content="sjshin">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../revealjs/css/reveal.css" id="link_test">
+    <link rel="stylesheet" href="../revealjs/css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../revealjs/css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../revealjs/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style id="style_test">
+        textarea { width:90%;position:relative;dispaly:block;font-size:0.55em;background-color:#3F3F3F; color:#fff;font-family: monospace;
+            line-height: 1.2em;
+            word-wrap: break-word;
+            box-shadow: 0px 0px 6px rgba(0,0,0,0.3); }
+
+        .code {
+            position:relative; }
+
+        .code > button {
+            font-family: "Nanum Gothic";
+            margin: 0 0 10px 15px;
+            padding: .3em;
+            font-size:.6em;
+            margin: 0 2px;
+            background-color: #0A5AFA;
+            width: 120px;
+            color: #fff;
+            position: absolute;
+            display: block;
+            border: none;
+            top: 1px;
+            left: 853px;
+            opacity: .4;
+            z-index: 1; }
+
+        .code > button:hover {
+            opacity: 1; }
+
+        button {
+            width: 150px;
+            height: 40px;
+            font-size: 20px; }
+
+        .f_left { float:left }
+
+        p.content {
+            font-size: 28px; }
+
+        .emphasize {
+            color: #81FFDC; }
+
+        .reveal section ul {
+            list-style:square;
+            font-size:25px; }
+
+        .reveal .l_none { list-style: none; }
+        .reveal li.l_title { margin-left: -20px; }
+
+        .reveal .txt_28 { font-size: 28px }
+        .reveal .reload_btn {
+            border-radius: 15px;
+            background-color: transparent;
+            border: solid 4px #fff;
+            color: #fff;
+            font-weight: bold; }
+
+        .red{
+            color: #ff4c4d;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <div>
+                <h2>small tip</h2>
+                <h3>
+                    JavaScript access to large amounts of data<br>
+                </h3>
+            </div>
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>mission</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>Doris Griffin id find</li>
+                    <li>해당 id를 relation에 있는 Doris Griffin에게 모두 부여한다.</li>
+                </ul>
+
+            </section>
+
+            <section data-background="#212124">
+                <h2>data structure</h2>
+                <pre><code class="javascript">
+                    [
+                        {
+                            "id": 1,
+                            "first_name": "Samuel",
+                            "last_name": "Reed",
+                            "email": "sreed0@bluehost.com",
+                            "country": "Yemen",
+                            "ip_address": "195.37.184.244",
+                            "relation": [
+                                {
+                                    "first_name": "Richard",
+                                    "last_name": "Day",
+                                    "email": "rdaybe@freewebs.com",
+                                    "country": "Colombia"
+                                },
+                                …
+                            ]
+                        },
+                        …
+                    ]
+
+
+                </code></pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>Iteration statements</h2>
+                <pre><code class="javascript">
+                    var findDorisGriffin = function( $value, $index ){
+                        var i, j, k, l, arg, rArg, _id, _chkId;
+
+                        for( i = 0, j = $value.length; i < j; i++ ){
+                            arg = $value[i];
+                            if( arg.first_name === 'Doris' && arg.last_name === "Griffin" ){
+                                _id = arg.id;
+                                break;
+                            }
+                        }
+
+                        for( i = 0, j = $value.length; i < j; i++ ){
+                            arg = $value[i];
+                            for( k = 0, l = arg.relation.length; k < l; k++ ){
+                                rArg = arg.relation[k];
+                                if( rArg.first_name === 'Doris' && rArg.last_name === "Griffin" ){
+                                    rArg.id = _id;
+                                }
+                            }
+                        }
+                    }
+                </code></pre>
+
+            </section>
+
+            <section data-background="#212124">
+                <h2>Iteration statements</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>(j = $value.length) == 1000000000</li>
+                </ul>
+                <pre><code class="javascript">
+                    for( i = 0, j = $value.length; i < j; i++ ){
+                        arg = $value[i];
+                        if( arg.first_name === 'Doris' && arg.last_name === "Griffin" ){
+                            _id = arg.id;
+                            break;
+                        }
+                    }
+                </code></pre>
+            </section>
+
+            <section data-background="#212124">
+                <h2>Iteration statements</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>process </li>
+                    <li>stack clear but..</li>
+                    <li>After 15 seconds the browser stop</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>recursive</h2>
+                <pre><code class="javascript">
+                    var findDorisGriffin = function( $value ){
+                        var i = 0, j = $value.length, _chkId;
+
+                        (function next(){
+                            if(i < j){
+                                var arg = $value[i++],
+                                parentNext = function( $id, $i , $j ) {
+                                    var relationNext = function($$id, $k, $l) {
+                                        if($k < $l){
+                                            var rArg = rArgs[$k++];
+                                            if( rArg.first_name === 'Doris' && rArg.last_name === "Griffin" ){
+                                                rArg.id = $$id;
+                                                _chkId = (i - 1);
+                                            }
+                                            relationNext( $$id, $k, $l );
+                                        }
+                                    };
+                                    if($i < $j){
+                                        var arg = $value[i++],
+                                        rArgs = arg.relation;
+
+                                        relationNext($id, 0, rArgs.length);
+                                        parentNext( $id, $i, $j )
+                                    }
+                                };
+
+
+                                if( arg.first_name === 'Doris' && arg.last_name === "Griffin" ){
+                                    return parentNext(arg.id , 0 , $value.length);
+                                }
+                                next();
+                            }
+                        })();
+
+                    }
+                </code></pre>
+
+            </section>
+
+            <section data-background="#212124">
+                <h2>recursive</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>Remember the original place for == stack</li>
+                    <li>stack overflow</li>
+                    <li>So logically, the last call from the location (tail call)</li>
+                    <li>but, browser not support tail call optimizer</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>async</h2>
+                <img src="js_async_1.png"/>
+            </section>
+
+            <section data-background="#212124">
+                <h2>async</h2>
+                <pre><code class="javascript">
+                    var findDorisGriffin = function( $value, $index ){
+                        var arg, start, i, j = $value.length;
+
+                        if($index) i = $index;
+                        else i = 0;
+
+                        start = Date().now;
+                        while( i < j ){
+                            arg = $value[i++]
+                            if( arg.first_name === 'Doris' && arg.last_name === "Griffin" ){
+                                return (function parentNext( $id, $value, $index ){
+                                    var k, l, rArgs, rArg, _chkId;
+
+                                    if($index) i = $index;
+                                    else i = 0;
+
+                                    start = Date().now;
+                                    while( i < j ){
+                                        arg = $value[i++];
+                                        rArgs = arg.relation;
+
+                                        for( k = 0, l = rArgs.length; k < l; k ++ ){
+                                            rArg = rArgs[k];
+                                            if( rArg.first_name === 'Doris' && rArg.last_name === "Griffin" ){
+                                            rArg.id = $id;
+                                            _chkId = (i - 1);
+                                            }
+                                        }
+
+                                        if(Date.now() - start > 3000){
+                                            return setTimeout(function(){ parentNext($id, $value, i) },0)
+                                        }
+                                    }
+
+                                })( arg.id, $value )
+                            }
+
+                            if(Date.now() - start > 3000){
+                                return setTimeout(function(){ findDorisGriffin($value, i) },0)
+                            }
+                        }
+
+                    }
+                </code></pre>
+
+            </section>
+
+            <section data-background="#212124">
+                <h2>async</h2>
+                <img src="js_async_2.png"/>
+            </section>
+
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>async</h2>
+                <p style="clear:left">
+                    So far, this code is simply a JavaScript block that was the running level. <br/>
+                    From the viewpoint of the browser append to dom costly through the polymer.
+                </p>
+                <ul>
+                    <li>ParsingHTML</li>
+                    <li>Render Tree construction</li>
+                    <li>Layout(reflow)</li>
+                    <li>Paint(repaint)</li>
+                </ul>
+
+            </section>
+
+
+
+        </section>
+
+        <section>
+            <section data-background="#212124">
+                <h2>polymer</h2>
+                <p style="clear:left">
+                    polymer dom-template some source code
+                </p>
+                <pre><code class="javascript">
+                    render: function() {
+                        this._needFullRefresh = true;
+                        // 여기를 보세요..
+                        this._debounceTemplate(this._render);
+                        this._flushTemplates();
+                    },
+                </code></pre>
+            </section>
+
+            <section data-background="#212124">
+                <h2>polymer</h2>
+                <ul>
+                    <li>Debouncer after registration</li>
+                    <li>flush</li>
+                </ul>
+            </section>
+
+            <section data-background="#212124">
+                <h2>polymer</h2>
+                <p style="clear:left">
+                    polymer Debounce some source code
+                </p>
+                <pre><code class="javascript">
+                    Debouncer.prototype = {
+                        go: function(callback, wait) {
+                            var h;
+                            this.finish = function() {
+                            Async.cancel(h);
+                        };
+                        h = Async.run(this.boundComplete, wait);
+                            this.callback = callback;
+                        },
+                        stop: function() {
+                            if (this.finish) {
+                                this.finish();
+                                this.finish = null;
+                            }
+                        },
+                        complete: function() {
+                            if (this.finish) {
+                                this.stop();
+                                this.callback.call(this.context);
+                            }
+                        }
+                    };
+                </code></pre>
+            </section>
+
+            <section data-background="#212124">
+                <h2>polymer</h2>
+                <p style="clear:left">
+                    polymer Async some source code
+                </p>
+                <pre><code class="javascript">
+                    run: function (callback, waitTime) {
+                        if (waitTime > 0) {
+                            //async find!!!!!
+                            //find find find
+                            return ~setTimeout(callback, waitTime);
+                        } else {
+                            this._twiddle.textContent = this._twiddleContent++;
+                            this._callbacks.push(callback);
+                            return this._currVal++;
+                        }
+                    },
+                </code></pre>
+            </section>
+
+        </section>
+
+        <section>
+            <h1>Thank You</h1>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="../revealjs/lib/js/head.min.js"></script>
+<script src="../revealjs/js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        width: 1024,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '../revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '../revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+    function run(sId) {
+        var el = document.getElementById(sId),
+                sValue = el.value,
+                sType = sId.replace(/\d+/g,"");
+
+        el = document.getElementById("content"+ sId.replace(/[a-z]+/ig,""));
+
+        if(sType == "script") {
+            try {
+                if(el.tagName == "IFRAME") {
+                    console.log(sValue);
+                    el.contentWindow.window.eval(sValue);
+                } else {
+                    eval(sValue);
+                }
+            } catch(e) {
+                if(e.message.indexOf("tagName") > -1) {
+                    eval(sValue);
+                } else {
+                    alert(e);
+                }
+            }
+        } else if(sType == "html") {
+            if(el.tagName == "IFRAME") {
+                el.contentWindow.document.body.innerHTML = sValue;
+            } else {
+                el.innerHTML += sValue;
+            }
+        }
+    }
+
+    function partial(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function () {
+            var arg = 0,
+                    a = args.slice(), i, j;
+            for ( i = 0, j = arguments.length; arg < j; i++ )
+                if(args[i] === undefined)
+                    a[i] = arguments[arg++];
+            return fn.apply(this, a);
+        };
+    }
+
+    function not(b) {return !b;}
+    function compose() {
+        var args = arguments,
+                start = 0,
+                end = args.length;
+        return function() {
+            var i = start, j = end,
+                    result = args[i++].apply(this, arguments);
+            while (i < j) result = args[i++].call(this, result);
+            return result;
+        };
+    }
+
+    var isNumber = compose(isNaN, not);
+
+    function _toArray() {
+        return Array.prototype.slice.call(arguments, 0);
+    }
+
+    function _filter(array, fn){
+        return array.filter(fn);
+    }
+
+    function _acc(array, fn){
+        return array.reduce(fn);
+    }
+
+    var add = compose(
+            _toArray,
+            partial(_filter, undefined, isNumber),
+            partial(_acc, undefined, function(a,b){return a+b} )
+    );
+</script>
+</body>
+</html>
