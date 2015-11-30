@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>CSS transform</title>
+
+    <meta name="author" content="sjshin">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../revealjs/css/reveal.css" id="link_test">
+    <link rel="stylesheet" href="../revealjs/css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../revealjs/css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../revealjs/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style id="style_test">
+        textarea { width:90%;position:relative;dispaly:block;font-size:0.55em;background-color:#3F3F3F; color:#fff;font-family: monospace;
+            line-height: 1.2em;
+            word-wrap: break-word;
+            box-shadow: 0px 0px 6px rgba(0,0,0,0.3); }
+
+        .code {
+            position:relative; }
+
+        .code > button {
+            font-family: "Nanum Gothic";
+            margin: 0 0 10px 15px;
+            padding: .3em;
+            font-size:.6em;
+            margin: 0 2px;
+            background-color: #0A5AFA;
+            width: 120px;
+            color: #fff;
+            position: absolute;
+            display: block;
+            border: none;
+            top: 1px;
+            left: 853px;
+            opacity: .4;
+            z-index: 1; }
+
+        .code > button:hover {
+            opacity: 1; }
+
+        button {
+            width: 150px;
+            height: 40px;
+            font-size: 20px; }
+
+        .f_left { float:left }
+
+        p.content {
+            font-size: 28px; }
+
+        .emphasize {
+            color: #81FFDC; }
+
+        .reveal section ul {
+            list-style:square;
+            font-size:25px; }
+
+        .reveal .l_none { list-style: none; }
+        .reveal li.l_title { margin-left: -20px; }
+
+        .reveal .txt_28 { font-size: 28px }
+        .reveal .reload_btn {
+            border-radius: 15px;
+            background-color: transparent;
+            border: solid 4px #fff;
+            color: #fff;
+            font-weight: bold; }
+
+
+    </style>
+    <style>
+        #t0 {
+            width: 50px; height: 50px; background-color: #fff;
+            transition: transform 6s ease;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .translate-ani {
+            transform: translate3d(500px, 0 ,0) !important;
+        }
+
+        #t1 {
+            width: 50px; height: 50px; background-color: #fff;
+            margin: 0 auto;
+            transition: transform 6s ease;
+            transform: scale3d(0, 0, 0);
+        }
+
+        .scale-ani {
+            transform: scale3d(2, 2, 2) !important;
+        }
+
+        #t2 {
+            width: 50px; height: 50px; background-color: #fff;
+            margin: 0 auto;
+            transition: transform 6s ease;
+            transform: rotate3d(0, 0, 1, 90deg)
+        }
+
+        .rotate-ani {
+            transform: rotate3d(0, 0, 1, 0deg) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <div>
+                <h1>
+                    CSS transform<br>
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <section data-background="#212124">
+                <h2>translate</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: translate3d(50%, 0, 0)</li>
+                </ul>
+                <div id="t0"></div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>설명</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: translate3d(50%, 0, 0)</li>
+                    <li style="color: #ff777d">acceleratedCompositor</li>
+                    <li>timing function 에 맞춰 변경</li>
+                    <li style="color: #ff777d">from (x : 134) to (x: 134.1123)</li>
+                    <li>rendering</li>
+                </ul>
+            </section>
+
+            <section data-background="#212124">
+                <h2>acceleratedCompositor, rendering</h2>
+                <img src="HandlingMultipleContexts.png" alt="" style="max-width: 80%; max-height: 80%;">
+                <a href="https://www.chromium.org/developers/design-documents/gpu-accelerated-compositing-in-chrome">
+                    https://www.chromium.org/developers/design-documents/gpu-accelerated-compositing-in-chrome
+                </a>
+            </section>
+
+            <section data-background="#212124">
+                <h2>from (x : 134) to (x: 134.1123) - 1</h2>
+                <a style="word-break: break-word;" href="https://chromium.googlesource.com/chromium/blink/+/master/Source/platform/transforms/TransformationMatrix.cpp#1003">
+                    https://chromium.googlesource.com/chromium/blink/+/master/Source/platform/transforms/TransformationMatrix.cpp#1003
+                </a>
+            </section>
+
+            <section data-background="#212124">
+                <h2>from (x : 134) to (x: 134.1123) - 2</h2>
+                <img src="vertex.png" style="background-color: transparent;">
+                <img src="translate.png" style="background-color: #ffffff;">
+                <p>https://en.wikipedia.org/wiki/Translation_(geometry)</p>
+            </section>
+        </section>
+
+        <section>
+            <section data-background="#212124">
+                <h2>scale</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: scale3d(2, 2, 2)</li>
+                </ul>
+                <div id="t1"></div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>설명</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: scale3d(2, 2, 2)</li>
+                    <li>acceleratedCompositor</li>
+                    <li>timing function 에 맞춰 변경</li>
+                    <li style="color: #ff777d">from (x:0,y:0,z:0) to (x:0.1123,y:0.1123,z:0.1123)</li>
+                    <li>rendering</li>
+                </ul>
+            </section>
+
+            <section data-background="#212124">
+                <h2>scale</h2>
+                <img src="vertex.png" style="background-color: transparent;">
+                <img src="scale.png" style="background-color: #ffffff;">
+                <p>https://en.wikipedia.org/wiki/Scaling_(geometry)</p>
+            </section>
+        </section>
+
+        <section>
+            <section data-background="#212124">
+                <h2>rotation</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: rotation3d(0, 0, 1, 90deg)</li>
+                </ul>
+                <div id="t2"></div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>설명</h2>
+                <ul style="width:500px;margin-top:20px">
+                    <li>transform: rotation3d(0, 0, 1, 90deg)</li>
+                    <li>acceleratedCompositor</li>
+                    <li>timing function 에 맞춰 변경</li>
+                    <li style="color: #ff777d">from (0, 0, 1, 0) to (0, 0, 1, 0.123)</li>
+                    <li>rendering</li>
+                </ul>
+            </section>
+
+            <section data-background="#212124">
+                <h2>rotation</h2>
+                <img src="vertex.png" style="background-color: transparent;">
+                <img src="rotations.png" style="background-color: #ffffff;">
+                <p>https://en.wikipedia.org/wiki/Rotation_matrix</p>
+            </section>
+        </section>
+
+
+
+        <section>
+            <h2>Why CSS transform?</h2>
+            <img src="1.png" alt="">
+            <img class="fragment" src="2.png" alt="">
+            <img class="fragment" src="3.png" alt="">
+            <div>
+                <ul>
+                    <li class="fragment">img tag</li>
+                    <li class="fragment">svg</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h1>Thank You</h1>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="../revealjs/lib/js/head.min.js"></script>
+<script src="../revealjs/js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        width: 1024,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '../revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '../revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+    function run(sId) {
+        var el = document.getElementById(sId),
+                sValue = el.value,
+                sType = sId.replace(/\d+/g,"");
+
+        el = document.getElementById("content"+ sId.replace(/[a-z]+/ig,""));
+
+        if(sType == "script") {
+            try {
+                if(el.tagName == "IFRAME") {
+                    console.log(sValue);
+                    el.contentWindow.window.eval(sValue);
+                } else {
+                    eval(sValue);
+                }
+            } catch(e) {
+                if(e.message.indexOf("tagName") > -1) {
+                    eval(sValue);
+                } else {
+                    alert(e);
+                }
+            }
+        } else if(sType == "html") {
+            if(el.tagName == "IFRAME") {
+                el.contentWindow.document.body.innerHTML = sValue;
+            } else {
+                el.innerHTML += sValue;
+            }
+        }
+    }
+
+    window.onload = function() {
+        document.querySelector('#t0').classList.add('translate-ani');
+        document.querySelector('#t0').addEventListener('transitionend', function() {
+            if(this.classList.contains('translate-ani')) {
+                this.classList.remove('translate-ani')
+            }else {
+                this.classList.add('translate-ani')
+            }
+        });
+
+        document.querySelector('#t1').classList.add('scale-ani');
+        document.querySelector('#t1').addEventListener('transitionend', function() {
+            if(this.classList.contains('scale-ani')) {
+                this.classList.remove('scale-ani')
+            }else {
+                this.classList.add('scale-ani')
+            }
+        });
+
+        document.querySelector('#t2').classList.add('rotate-ani');
+        document.querySelector('#t2').addEventListener('transitionend', function() {
+            if(this.classList.contains('rotate-ani')) {
+                this.classList.remove('rotate-ani')
+            }else {
+                this.classList.add('rotate-ani')
+            }
+        });
+    };
+
+
+</script>
+</body>
+</html>
