@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>vsync</title>
+
+    <meta name="author" content="sjshin">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../revealjs/css/reveal.css" id="link_test">
+    <link rel="stylesheet" href="../revealjs/css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../revealjs/css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../revealjs/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style id="style_test">
+        textarea { width:90%;position:relative;dispaly:block;font-size:0.55em;background-color:#3F3F3F; color:#fff;font-family: monospace;
+            line-height: 1.2em;
+            word-wrap: break-word;
+            box-shadow: 0px 0px 6px rgba(0,0,0,0.3); }
+
+        .code {
+            position:relative; }
+
+        .code > button {
+            font-family: "Nanum Gothic";
+            margin: 0 0 10px 15px;
+            padding: .3em;
+            font-size:.6em;
+            margin: 0 2px;
+            background-color: #0A5AFA;
+            width: 120px;
+            color: #fff;
+            position: absolute;
+            display: block;
+            border: none;
+            top: 1px;
+            left: 853px;
+            opacity: .4;
+            z-index: 1; }
+
+        .code > button:hover {
+            opacity: 1; }
+
+        button {
+            width: 150px;
+            height: 40px;
+            font-size: 20px; }
+
+        .f_left { float:left }
+
+        p.content {
+            font-size: 28px; }
+
+        .emphasize {
+            color: #81FFDC; }
+
+        .reveal section ul {
+            list-style:square;
+            font-size:25px; }
+
+        .reveal .l_none { list-style: none; }
+        .reveal li.l_title { margin-left: -20px; }
+
+        .reveal .txt_28 { font-size: 28px }
+        .reveal .reload_btn {
+            border-radius: 15px;
+            background-color: transparent;
+            border: solid 4px #fff;
+            color: #fff;
+            font-weight: bold; }
+
+        .red{
+            color: #ff4c4d;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <div>
+                <h2>vsync</h2>
+            </div>
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>monitor</h2>
+                <h4>pixel map</h4>
+                <img src="lab4_pixel_map.png">
+            </section>
+
+            <section data-background="#212124">
+                <h2>dobule buffering</h2>
+                <img src="framedef2.gif"/>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>vsync</h2>
+                <h4>input, output</h4>
+                <img src="lab4_bars_design.png">
+            </section>
+
+            <section data-background="#212124">
+                <h2>the timing diagram for hsync and vsync</h2>
+                <img src="lab4_vga_hsync_timing.png">
+                <ul>
+                    <li>Tpw: Time of the pulse width: How long to keep the signal low</li>
+                    <li>Ts : Time period: One complete row/column of information</li>
+                    <li>Tdisp : Time of Display: This is the time we can actually display information</li>
+                    <li>Tfp: Time front porch: The amount of time for the front porch</li>
+                    <li>Tbp: Time back porch: The amount of time for the back porch</li>
+                </ul>
+            </section>
+
+            <section data-background="#212124">
+                <h2>Vsync system call</h2>
+                <ul>
+                    <li>Window: DwmGetCompositionTimingInfo()/MonitorFromWindow()/GetMonitorInfo()</li>
+                    <li>Android: <a href="https://android.googlesource.com/platform/frameworks/base/+/master/native/android/choreographer.cpp#107">Choreographer.postFrameCallback()</a></li>
+                    <li>OSX: CVDisplayLinkSetOutputCallback()</li>
+                    <li>IOS: CADisplayLink / displayLinkWithTarget:selecor</li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <h3>chrome time line</h3>
+                <img src="timeline1.png">
+            </section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <h3>1/60 = 16.67ms <a href="https://csstriggers.com/">tip!</a></h3>
+                <img src="timeline2.png">
+            </section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <h3>1/60 = 16.67ms</h3>
+                <img src="timeline3.png">
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>skia</h2>
+                <img src="skia.png">
+                <div>SkPicture, SkPicturePlayback: records and replay draw operations</div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <div>rasterization</div>
+                <img src="timeline4.png">
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <img src="timeline5.png">
+            </section>
+
+            <section data-background="#212124">
+                <h2>browser</h2>
+                <a href="https://w3c.github.io/requestidlecallback/#idle-periods">requestIdleCallback</a>
+            </section>
+
+        </section>
+
+
+        <section>
+            <h1>Thank You</h1>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="../revealjs/lib/js/head.min.js"></script>
+<script src="../revealjs/js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        width: 1024,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '../revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '../revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+    function run(sId) {
+        var el = document.getElementById(sId),
+                sValue = el.value,
+                sType = sId.replace(/\d+/g,"");
+
+        el = document.getElementById("content"+ sId.replace(/[a-z]+/ig,""));
+
+        if(sType == "script") {
+            try {
+                if(el.tagName == "IFRAME") {
+                    console.log(sValue);
+                    el.contentWindow.window.eval(sValue);
+                } else {
+                    eval(sValue);
+                }
+            } catch(e) {
+                if(e.message.indexOf("tagName") > -1) {
+                    eval(sValue);
+                } else {
+                    alert(e);
+                }
+            }
+        } else if(sType == "html") {
+            if(el.tagName == "IFRAME") {
+                el.contentWindow.document.body.innerHTML = sValue;
+            } else {
+                el.innerHTML += sValue;
+            }
+        }
+    }
+
+    function partial(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function () {
+            var arg = 0,
+                    a = args.slice(), i, j;
+            for ( i = 0, j = arguments.length; arg < j; i++ )
+                if(args[i] === undefined)
+                    a[i] = arguments[arg++];
+            return fn.apply(this, a);
+        };
+    }
+
+    function not(b) {return !b;}
+    function compose() {
+        var args = arguments,
+                start = 0,
+                end = args.length;
+        return function() {
+            var i = start, j = end,
+                    result = args[i++].apply(this, arguments);
+            while (i < j) result = args[i++].call(this, result);
+            return result;
+        };
+    }
+
+    var isNumber = compose(isNaN, not);
+
+    function _toArray() {
+        return Array.prototype.slice.call(arguments, 0);
+    }
+
+    function _filter(array, fn){
+        return array.filter(fn);
+    }
+
+    function _acc(array, fn){
+        return array.reduce(fn);
+    }
+
+    var add = compose(
+            _toArray,
+            partial(_filter, undefined, isNumber),
+            partial(_acc, undefined, function(a,b){return a+b} )
+    );
+</script>
+</body>
+</html>
