@@ -233,30 +233,52 @@
                 </code></pre>
             </section>
 
+            <section data-background="#212124">
+                <h2>aop</h2>
+                <div>implementation code 2</div>
+                <pre><code class="javascript">
+                function aop(pointcut, factory, target){
+                    var f = target[pointcut];
+                    target[pointcut] = factory({
+                         getResult:function(context, arg){
+                              return f.apply(context, arg);
+                         }
+                    });
+                }
+                </code></pre>
+            </section>
+
         </section>
 
         <section>
-            <h1>Thank You</h1>
-            <div id="ytplayer"></div>
+            <section>
+                <ul>
+                    <li>ES6 for Humans</li>
+                    <li>Exploring ES6</li>
+                </ul>
+            </section>
+            <section>
+                <div id="ytplayer"></div>
 
-            <script>
-		        // Load the IFrame Player API code asynchronously.
-		        var tag = document.createElement('script');
-		        tag.src = "https://www.youtube.com/player_api";
-		        var firstScriptTag = document.getElementsByTagName('script')[0];
-		        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                <script>
+                    // Load the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/player_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-		        // Replace the 'ytplayer' element with an <iframe> and
-		        // YouTube player after the API code downloads.
-		        var player;
-		        function onYouTubePlayerAPIReady() {
-			        player = new YT.Player('ytplayer', {
-				        height: '360',
-				        width: '640',
-				        videoId: 'a6BQphLoTag'
-			        });
-		        }
-            </script>
+                    // Replace the 'ytplayer' element with an <iframe> and
+                    // YouTube player after the API code downloads.
+                    var player;
+                    function onYouTubePlayerAPIReady() {
+                        player = new YT.Player('ytplayer', {
+                            height: '360',
+                            width: '640',
+                            videoId: 'a6BQphLoTag'
+                        });
+                    }
+                </script>
+            </section>
         </section>
 
     </div>
