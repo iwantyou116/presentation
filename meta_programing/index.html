@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>meta</title>
+
+    <meta name="author" content="sjshin">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../revealjs/css/reveal.css" id="link_test">
+    <link rel="stylesheet" href="../revealjs/css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../revealjs/css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../revealjs/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style id="style_test">
+        textarea { width:90%;position:relative;dispaly:block;font-size:0.55em;background-color:#3F3F3F; color:#fff;font-family: monospace;
+            line-height: 1.2em;
+            word-wrap: break-word;
+            box-shadow: 0px 0px 6px rgba(0,0,0,0.3); }
+
+        .code {
+            position:relative; }
+
+        .code > button {
+            font-family: "Nanum Gothic";
+            margin: 0 0 10px 15px;
+            padding: .3em;
+            font-size:.6em;
+            margin: 0 2px;
+            background-color: #0A5AFA;
+            width: 120px;
+            color: #fff;
+            position: absolute;
+            display: block;
+            border: none;
+            top: 1px;
+            left: 853px;
+            opacity: .4;
+            z-index: 1; }
+
+        .code > button:hover {
+            opacity: 1; }
+
+        button {
+            width: 150px;
+            height: 40px;
+            font-size: 20px; }
+
+        .f_left { float:left }
+
+        p.content {
+            font-size: 28px; }
+
+        .emphasize {
+            color: #81FFDC; }
+
+        .reveal section ul {
+            list-style:square;
+            font-size:25px; }
+
+        .reveal .l_none { list-style: none; }
+        .reveal li.l_title { margin-left: -20px; }
+
+        .reveal .txt_28 { font-size: 28px }
+        .reveal .reload_btn {
+            border-radius: 15px;
+            background-color: transparent;
+            border: solid 4px #fff;
+            color: #fff;
+            font-weight: bold; }
+
+        .red{
+            color: #ff4c4d;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <div>
+                <h1>meta object protocol</h1>
+            </div>
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>the art of meta object protocol</h2>
+                <img src="amop.jpg">
+                <div>
+                    <ul style="text-align: center;list-style: none;width:450px;margin:20px 0">
+                        <li class="fragment">Introspection</li>
+                        <li class="fragment">Self-modification</li>
+                        <li class="fragment">Intercession</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>Introspection</h2>
+                <div>inspecting itself</div>
+                <pre><code class="javascript">
+                // Base level
+                const obj = {
+                    hello() {
+                        console.log('Hello!');
+                    }
+                };
+                // Meta level
+                for (const key of Object.keys(obj)) {
+                    console.log(key);
+                }
+                </code></pre>
+            </section>
+
+            <section data-background="#212124">
+                <h2>Self-modification</h2>
+                <div>modify the structure</div>
+                <pre><code class="javascript">
+                function moveProperty(source, propertyName, target) {
+                    target[propertyName] = source[propertyName];
+                    delete source[propertyName];
+                }
+
+                > const obj1 = { prop: 'abc' };
+                > const obj2 = {};
+                > moveProperty(obj1, 'prop', obj2);
+
+                > obj1
+                {}
+                > obj2
+                { prop: 'abc' }
+                </code></pre>
+            </section>
+
+
+            <section data-background="#212124">
+                <h2>Intercession</h2>
+                <div>modify the semantics of some language operations</div>
+                <pre><code class="javascript">
+                const target = {};
+                const handler = {
+                    get(target, propKey, receiver) {
+                        console.log(`GET ${propKey}`);
+                        return 123;
+                    }
+                };
+                const proxy = new Proxy(target, handler);
+
+                > proxy.foo
+                GET foo
+                123
+                </code></pre>
+            </section>
+        </section>
+
+        <section>
+
+            <section data-background="#212124">
+                <h2>Aspect oriented programming</h2>
+                <div>the separation of cross-cutting concerns</div>
+            </section>
+
+            <section data-background="#212124">
+                <h2>aop</h2>
+                <div>host code</div>
+                <pre><code class="javascript">
+                const fLog = function(info){
+                    return function(...args){
+                        const result = info.getResult(this, args);
+                        console.log(`param: ${args}, result: ${result}`)
+                        return result;
+                    };
+                };
+
+                class Cls {
+                    constructor(a) {
+                        this.a = a;
+                    }
+                    method(b) {
+                        return this.a + b;
+                    }
+                };
+
+                > aop('method', fLog,  new Cls(1)).method(2);
+                param: 2, result: 3
+                3
+                </code></pre>
+            </section>
+
+            <section data-background="#212124">
+                <h2>aop</h2>
+                <div>implementation code</div>
+                <pre><code class="javascript">
+                function aop(pointcut, factory, target) {
+                    return new Proxy(target, {
+                        get: function(obj, prop) {
+                            let value;
+                            value = Reflect.get(obj, prop);
+                            if (pointcut === prop) {
+                                value = factory({
+                                    getResult:function(context, arg){
+                                        return obj[prop].apply(context, arg);
+                                    }
+                                });
+                            }
+                            return value;
+                        }
+                    });
+                }
+                </code></pre>
+            </section>
+
+        </section>
+
+        <section>
+            <h1>Thank You</h1>
+            <div id="ytplayer"></div>
+
+            <script>
+		        // Load the IFrame Player API code asynchronously.
+		        var tag = document.createElement('script');
+		        tag.src = "https://www.youtube.com/player_api";
+		        var firstScriptTag = document.getElementsByTagName('script')[0];
+		        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+		        // Replace the 'ytplayer' element with an <iframe> and
+		        // YouTube player after the API code downloads.
+		        var player;
+		        function onYouTubePlayerAPIReady() {
+			        player = new YT.Player('ytplayer', {
+				        height: '360',
+				        width: '640',
+				        videoId: 'a6BQphLoTag'
+			        });
+		        }
+            </script>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="../revealjs/lib/js/head.min.js"></script>
+<script src="../revealjs/js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        width: 1024,
+        height: 768,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '../revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '../revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+    function run(sId) {
+        var el = document.getElementById(sId),
+                sValue = el.value,
+                sType = sId.replace(/\d+/g,"");
+
+        el = document.getElementById("content"+ sId.replace(/[a-z]+/ig,""));
+
+        if(sType == "script") {
+            try {
+                if(el.tagName == "IFRAME") {
+                    console.log(sValue);
+                    el.contentWindow.window.eval(sValue);
+                } else {
+                    eval(sValue);
+                }
+            } catch(e) {
+                if(e.message.indexOf("tagName") > -1) {
+                    eval(sValue);
+                } else {
+                    alert(e);
+                }
+            }
+        } else if(sType == "html") {
+            if(el.tagName == "IFRAME") {
+                el.contentWindow.document.body.innerHTML = sValue;
+            } else {
+                el.innerHTML += sValue;
+            }
+        }
+    }
+
+    function partial(fn) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function () {
+            var arg = 0,
+                    a = args.slice(), i, j;
+            for ( i = 0, j = arguments.length; arg < j; i++ )
+                if(args[i] === undefined)
+                    a[i] = arguments[arg++];
+            return fn.apply(this, a);
+        };
+    }
+
+    function not(b) {return !b;}
+    function compose() {
+        var args = arguments,
+                start = 0,
+                end = args.length;
+        return function() {
+            var i = start, j = end,
+                    result = args[i++].apply(this, arguments);
+            while (i < j) result = args[i++].call(this, result);
+            return result;
+        };
+    }
+
+    var isNumber = compose(isNaN, not);
+
+    function _toArray() {
+        return Array.prototype.slice.call(arguments, 0);
+    }
+
+    function _filter(array, fn){
+        return array.filter(fn);
+    }
+
+    function _acc(array, fn){
+        return array.reduce(fn);
+    }
+
+    var add = compose(
+            _toArray,
+            partial(_filter, undefined, isNumber),
+            partial(_acc, undefined, function(a,b){return a+b} )
+    );
+</script>
+</body>
+</html>
